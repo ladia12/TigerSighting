@@ -25,12 +25,17 @@ type Query {
 }
 
 type Mutation {
-    createTiger(tigerInput: TigerInput!): Tiger!
+    createTiger(tigerInput: TigerInput!): CreateTigerResponse!
     createSighting(sightingInput: SightingInput!): CreateSightingResponse!
 }
 
 type CreateSightingResponse {
     sighting: Sighting
+    errorMessage: String
+}
+
+type CreateTigerResponse {
+    tiger: Tiger
     errorMessage: String
 }
 
