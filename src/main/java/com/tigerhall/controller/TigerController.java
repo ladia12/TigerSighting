@@ -19,17 +19,37 @@ public class TigerController {
         this.tigerService = tigerService;
     }
 
+    /**
+     * Retrieves a paginated list of all tigers.
+     *
+     * @param page The page number
+     * @param size The number of items per page
+     * @return A page of tiger objects
+     */
     @QueryMapping
     public Page<Tiger> allTigers(@Argument Integer page, @Argument Integer size) {
         return tigerService.findAllTigers(PageRequest.of(page, size));
     }
 
+    /**
+     * Retrieves a tiger by its ID.
+     *
+     * @param id The ID of the tiger
+     * @return The tiger object
+     * @throws IllegalArgumentException if the tiger does not exist
+     */
     @QueryMapping
     public Tiger tiger(@Argument Long id) {
         return tigerService.findTigerById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Tiger with id " + id + " does not exist"));
     }
 
+    /**
+     * Creates a new tiger.
+     *
+     * @param tigerInput The input data for creating a tiger
+     * @return The response object containing the created tiger or an error message
+     */
     @MutationMapping
     public CreateTigerResponse createTiger(@Argument TigerInput tigerInput) {
         try {

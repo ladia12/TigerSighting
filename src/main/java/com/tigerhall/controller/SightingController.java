@@ -23,11 +23,25 @@ public class SightingController {
         this.tigerService = tigerService;
     }
 
+    /**
+     * Retrieves a paginated list of all sightings for a specific tiger.
+     *
+     * @param tigerId The ID of the tiger
+     * @param page    The page number
+     * @param size    The number of items per page
+     * @return A page of sighting objects
+     */
     @QueryMapping
     public Page<Sighting> allSightings(@Argument Long tigerId, @Argument Integer page, @Argument Integer size) {
         return sightingService.findAllSightingsByTigerId(tigerId, PageRequest.of(page, size));
     }
 
+    /**
+     * Creates a new sighting for a specific tiger.
+     *
+     * @param sightingInput The input data for creating a sighting
+     * @return The response object containing the created sighting or an error message
+     */
     @MutationMapping
     public CreateSightingResponse createSighting(@Argument SightingInput sightingInput) {
         try {

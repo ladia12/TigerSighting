@@ -15,6 +15,13 @@ public class SightingService {
         this.sightingRepository = sightingRepository;
     }
 
+    /**
+     * Saves a sighting.
+     *
+     * @param sighting The sighting object to be saved
+     * @return The saved sighting object
+     * @throws IllegalArgumentException if the sighting data is invalid
+     */
     public Sighting saveSighting(Sighting sighting) throws IllegalArgumentException {
         if (sighting.getTiger() == null) {
             throw new IllegalArgumentException("Tiger cannot be null");
@@ -46,6 +53,13 @@ public class SightingService {
         return sightingRepository.save(sighting);
     }
 
+    /**
+     * Calculates the distance between two sets of coordinates.
+     *
+     * @param coordinates1 The first set of coordinates
+     * @param coordinates2 The second set of coordinates
+     * @return The distance between the coordinates in kilometers
+     */
     private double calculateDistance(Location coordinates1, Location coordinates2) {
 
         double lat1 = coordinates1.getLatitude();
@@ -67,6 +81,13 @@ public class SightingService {
         return earthRadius * c;
     }
 
+    /**
+     * Retrieves a paginated list of all sightings for a given tiger.
+     *
+     * @param tigerId  The ID of the tiger
+     * @param pageable The pageable object specifying the page number and size
+     * @return A page of sighting objects
+     */
     public Page<Sighting> findAllSightingsByTigerId(Long tigerId, Pageable pageable) {
         return sightingRepository.findByTiger_IdOrderByTimestampDesc(tigerId, pageable);
     }

@@ -18,28 +18,48 @@ public class TigerService {
         this.tigerRepository = tigerRepository;
     }
 
+    /**
+     * Retrieves a tiger by its ID.
+     *
+     * @param id The ID of the tiger
+     * @return The optional tiger object
+     */
     public Optional<Tiger> findTigerById(Long id) {
         return tigerRepository.findById(id);
     }
 
+    /**
+     * Retrieves a paginated list of all tigers.
+     *
+     * @param pageable The pageable object specifying the page number and size
+     * @return A page of tiger objects
+     */
     public Page<Tiger> findAllTigers(Pageable pageable) {
         return tigerRepository.findAllTigersOrderByLastSeenTimestampDesc(pageable);
     }
 
+    /**
+     * Saves a tiger.
+     *
+     * @param tiger The tiger object to be saved
+     * @return The saved tiger object
+     * @throws IllegalArgumentException        if the tiger data is invalid
+     * @throws DataIntegrityViolationException if there is a data integrity violation
+     */
     public Tiger saveTiger(Tiger tiger) throws IllegalArgumentException, DataIntegrityViolationException {
-        if(tiger.getName() == null || tiger.getName().isEmpty()) {
+        if (tiger.getName() == null || tiger.getName().isEmpty()) {
             throw new IllegalArgumentException("Tiger name cannot be empty or null");
         }
 
-        if(tiger.getDateOfBirth() == null) {
+        if (tiger.getDateOfBirth() == null) {
             throw new IllegalArgumentException("Date of Birth cannot be null");
         }
 
-        if(tiger.getLastSeenTimestamp() == null) {
+        if (tiger.getLastSeenTimestamp() == null) {
             tiger.setLastSeenTimestamp(LocalDateTime.now());
         }
 
-        if(tiger.getLastSeenLatitude() == null || tiger.getLastSeenLongitude() == null) {
+        if (tiger.getLastSeenLatitude() == null || tiger.getLastSeenLongitude() == null) {
             throw new IllegalArgumentException("Last Seen Coordinates cannot be empty or null");
         }
 
